@@ -236,71 +236,169 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
+* Mainly NUS computing students
+* has a need to manage a significant number of task, most of which has deadlines
+* For computing students, task at hand may take longer than expected
+* Might have many last minute task.
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**:
+* Manage tasks faster than a typical mouse/GUI driven app
+* A quick way to view all tasks due on a specified day
+* Able to quickly search for an available timing for a particular task
+* Organising tasks according to projects/modules/deadline so that users can view these tasks with different filters
+* Able to adjust and edit task according to user needs
 
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
+| Priority | As a …​ | I want to …​ | So that I can…​ |
+| -------- | ---------- | --------------- | ------------------ |
+| `* * *`  | new user | see usage instructions | refer to instructions when I forget how to use the App |
+| `* * *`  | user | add a new deadline | know when to complete it by |
+| `* * *`  | user | mark a task as done | remove tasks from the list after completing them |
+| `* * *`  | user | view when a task is due | understand how much time I have to complete it |
+| `* * *`  | returning user | view all the tasks previously set | avoid resetting all the tasks |
+| `* * *`  | user | search for a task using keywords | find matching tasks quickly |
+| `* * *`  | user | view all my tasks in a list | track tasks I have not done |
 
-*{More to be added}*
+*{Updated for v1.2}*
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `PlanIT` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case: Adding a task**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
-
+1. User enters command to add a task to the list.
+2. PlanIT shows the resulting list after adding task to it.
+    
     Use case ends.
 
 **Extensions**
+* 1a. PlanIT detects a command of the wrong format.
+  
+    * 1a1. PlanIT requests for user to input command in correct format.
+    * 1a2. User enters command in correct format.
+    
+    Steps 1a1-1a2 are repeated until the data entered is correct.
+    
+    Use case resumes from step 2.
 
-* 2a. The list is empty.
+**Use case: Viewing all possible commands**
 
-  Use case ends.
+**MSS**
 
-* 3a. The given index is invalid.
+1. User enters command to view all possible commands.
+2. PlanIT displays all possible commands to user.  
 
-    * 3a1. AddressBook shows an error message.
+   Use case ends.
 
-      Use case resumes at step 2.
+**Use case: Viewing all tasks**
 
-*{More to be added}*
+**MSS**
+
+1. User enters command to view the list of tasks.
+2. PlanIT displays the complete list of tasks.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. PlanIT detects a command to view only uncompleted tasks.
+    
+    * 1a1. PlanIT displays only uncompleted tasks.
+    
+    Use case ends.
+
+**Use case: Add a deadline to a task**
+
+**MSS**
+1. User _adds a task_ to the list.
+2. PlanIt shows task added to the list and updates list.
+3. User enters command to add a deadline to a specified task.
+4. PlanIt shows task with updated deadline and updates list.
+
+**Extensions**
+* 4a. The given index is invalid.
+    * 4a1. PlanIt shows error message.
+    
+        Use case resumes at step 3.
+
+**Use case: Delete a task**
+
+**MSS**
+1. User _adds a task_ to the list.
+2. PlanIt shows task added to the list and updates list.
+3. User enters command to delete a specified task.
+4. PlanIt shows task that was deleted and updates list.
+
+**Extensions**
+* 4a. The given index is invalid.
+    * 4a1. PlanIt shows error message.
+
+      Use case resumes at step 3.
+
+**Use case: Find matching tasks**
+
+**MSS**
+1. User _adds a task_ to the list.
+2. PlanIt shows task added to the list and updates list.
+3. User enters command to find tasks with given keywords.
+4. PlanIt shows all tasks containing given keywords.
+
+**Extensions**
+* 4a. There are no matching tasks.
+    * 4a1. PlanIt shows no matching tasks.
+
+      Use case ends.
+    
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+Non-functional requirements specify the constraints under which the system for PlanIT is developed and operated.
+
+#### Technical requirements:
+* The system should be compatible on mainstream OS, with only version Java 11 
+  (no other version) installed.
+* The system should work on both 32-bit and 64-bit environments.  
+
+#### Performance requirements:
+* The system should be loaded up within 2 seconds or less.
+* The User Interface should be responsive to user input and loaded up within 2 seconds.
+* The system should be able to handle 1,000 or more task data entries without noticeable sluggishness
+  in performance for typical usage.
+
+#### Usability requirements:
+* The user should have a keyboard and well-verse in typing alphanumeric keys on the keyboard.
+
+#### Testability requirements:
+* The system is not dependent on any remote servers so that it can be tested by anyone at any time without restrictions.
+
+#### Scalability requirements:
+* The program is easily extendable for addition of features.
+
+#### Data requirements:
+* The system file size should not exceed 100 MB.
+* The system should save data entered by the user in a human editable file without any use 
+  of external database management system.
+
+#### Project scope:
+* The features within the system is only catered to a single user.
+* The system is catered to user who can type fast and prefer typing over any other means.
 
 *{More to be added}*
 
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, OS-X
-* **Private contact detail**: A contact detail that is not meant to be shared with others
 
 --------------------------------------------------------------------------------------------------------------------
 
